@@ -11,9 +11,10 @@ const typeDefs = `
     _id: ID!
     name: String!
     type: String!
+    age: Int!
     isClean: Boolean
     playedWith: Boolean
-    fed: Boolean
+    hunger: Int
     }
 
     type Auth {
@@ -22,7 +23,7 @@ const typeDefs = `
     }
 
     type Query {
-    pets: [Pet]
+    pet(_id: ID!): Pet
     user: User
 
     }
@@ -30,8 +31,8 @@ const typeDefs = `
     type Mutation {
     addUser(userName: String!, email: String!, password: String!): Auth
     updateUser(userName: String, email: String, password: String): User
-    addPet(name: String, type: Boolean, isClean: Boolean, playedWith: Boolean, fed: Boolean): Pet
-    
+    createPet(name: String, type: Boolean, age: Int!, isClean: Boolean, playedWith: Boolean, hunger: Int): Pet
+    updatePet(id: ID!, name: String, type: String, age: Int, isClean: Boolean, playedWith: Boolean, hunger: Int): Pet
     login(email: String!, password: string!): Auth
     }
 `;
