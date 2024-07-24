@@ -32,6 +32,51 @@ const resolvers = {
     
             return { token, user };
         },
+        updateUser: async (parent, args, context) => {
+            if (context.user) {
+              return await User.findByIdAndUpdate(context.user._id, args, { new: true });
+            }
+      
+            throw AuthenticationError;
+          },
+        createPet: async (parent, {  name, type, age, isClean = true, playedWith, hunger = 0  }) => {
+            if (!context.user) {
+                throw new Error('User not authenticated');
+            }
+      
+            const pet = new Pet({
+                name,
+                type,
+                age,
+                isClean,
+                playedWith,
+                hunger,
+            });
+      
+            await pet.save();
+      
+            const updatedUser = await User.findByIdAndUpdate(
+                context.user.id,
+                { $push: { pets: pet._id } }, 
+                { new: true }
+            );
+      
+            return pet;
+        },
+        updatePet: async (parent, { _id, name, type, age, isClean, playedWith, hunger }) => {
+                const updateObject = {};
+            if (name) updateObject.name = name;
+            if (type) updateObject.type = type;
+            if (age !== undefined) updateObject.age = age;
+            if (isClean !== undefined) updateObject.isClean = isClean;
+            if (playedWith !== undefined) updateObject.playedWith = playedWith;
+            if (hunger !== undefined) updateObject.hunger = hunger;
+
+            // Find the pet by ID and update it
+            const updatedPet = await Pet.findByIdAndUpdate(id, updateObject, { new: true });
+
+            return updatedPet;
+        },
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
 

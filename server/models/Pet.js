@@ -24,7 +24,8 @@ const petSchema = new Schema ({
         default: '1'
     },
     playedWith: {
-        type: Boolean
+        type: Boolean,
+        default: '0'
     },
     hunger:{
         type: Number,
