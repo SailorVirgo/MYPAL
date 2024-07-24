@@ -10,8 +10,14 @@ const petSchema = new Schema ({
     },
     type:{
         type: String,
-            enum: ['Cat', 'Dog'],
+        required: true
+    },
+    age: {
+        type: Number,
         required: true,
+        min: 0,
+        max: 13,
+        default: 0
     },
     isClean: {
         type: Boolean,
@@ -20,9 +26,11 @@ const petSchema = new Schema ({
     playedWith: {
         type: Boolean
     },
-    fed:{
-        type: Boolean,
-        default: '1'
+    hunger:{
+        type: Number,
+        min: 0,
+        max: 100,
+        default: 0
     }
 });
 

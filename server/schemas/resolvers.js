@@ -4,7 +4,26 @@ const stripe = require('stripe')('sk_test_51PfXutHfg0rPoMOJTS9WAq4iOWFBFmmztIBLH
 
 const resolvers = {
     Query: {
+        user: async (parent, args, context) => {
+            if (context.user) {
+              const user = await User.findById(context.user._id)
+              .populate({path:'pets',
+                options: {sort:{name: 1}}
+              });
+      
+              return user;
+            }
+      
+            throw AuthenticationError;
+          },
+          pet: async (parent, { _id }, context) => {
+            if(context.user) {
+                const user = await User.findById(context.user._id).populate({
 
+                })
+                return user.pets.id(_id);
+            }
+          },
     },
     Mutation: {
         addUser: async (parent, args) => {
