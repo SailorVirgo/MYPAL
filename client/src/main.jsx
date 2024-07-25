@@ -1,82 +1,35 @@
-import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
-import { gql } from "@apollo/client";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-// Define the login mutation
-const LOGIN_USER = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-      user {
-        _id
-        userName
-        email
-      }
-    }
-  }
-`;
+import App from "./App.jsx";
+import Home from "./pages/Home";
+//import Signup from './pages/Signup';
+import Login from "./pages/login";
 
-function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+import ErrorPage from "./pages/error";
 
-  const [login, { loading }] = useMutation(LOGIN_USER, {
-    onCompleted: (data) => {
-      // Store the token in localStorage
-      localStorage.setItem("token", data.login.token);
-      // You might want to redirect the user or update the app state here
-      console.log("Login successful", data.login.user);
-    },
-    onError: (error) => {
-      setErrorMessage(error.message);
-    },
-  });
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      //  {
+      //   path: '/signup',
+      //   element: <Signup />
+      // },
+    ],
+  },
+]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!email || !password) {
-      setErrorMessage("Please enter both email and password");
-      return;
-    }
-    try {
-      await login({ variables: { email, password } });
-    } catch (e) {
-      console.error("Login error", e);
-    }
-  };
-
-  if (loading) return <p>Loading...</p>;
-
-  return (
-    <div className="login-container">
-      <h2>Login</h2>
-      {errorMessage && <p className="error">{errorMessage}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  );
-}
-
-export default Login;
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <RouterProvider router={router} />
+);

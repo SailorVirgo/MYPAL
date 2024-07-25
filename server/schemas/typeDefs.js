@@ -32,7 +32,7 @@ const typeDefs = `
     updateUser(userName: String, email: String, password: String): User
     addPet(name: String, type: Boolean, isClean: Boolean, playedWith: Boolean, fed: Boolean): Pet
     
-    login(email: String!, password: string!): Auth
+    login(email: String!, password: String!): Auth
     }
 `;
 module.exports = typeDefs;
