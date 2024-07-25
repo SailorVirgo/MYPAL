@@ -31,9 +31,10 @@ const typeDefs = `
     type Mutation {
     addUser(userName: String!, email: String!, password: String!): Auth
     updateUser(userName: String, email: String, password: String): User
-    createPet(name: String, type: Boolean, age: Int!, isClean: Boolean, playedWith: Boolean, hunger: Int): Pet
+    addPet(name: String, type: Boolean, age: Int!, isClean: Boolean, playedWith: Boolean, hunger: Int): Pet
     updatePet(id: ID!, name: String, type: String, age: Int, isClean: Boolean, playedWith: Boolean, hunger: Int): Pet
-    login(email: String!, password: string!): Auth
-    }
+    
+    login(email: String!, password: String!): Auth
+ }
 `;
 module.exports = typeDefs;
