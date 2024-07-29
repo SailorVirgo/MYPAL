@@ -1,16 +1,16 @@
 const typeDefs = `
     type User {
-        _id: ID!
-        userName: String!
-        email: String!
-        password: String!
+        _id: ID
+        userName: String
+        email: String
+        password: String
         pets: [Pet]
     }
 
     type Pet {
-    _id: ID!
-    name: String!
-    type: String!
+    _id: ID
+    name: String
+    type: String
     isClean: Boolean
     playedWith: Boolean
     fed: Boolean
@@ -32,7 +32,7 @@ const typeDefs = `
     updateUser(userName: String, email: String, password: String): User
     addPet(name: String, type: Boolean, isClean: Boolean, playedWith: Boolean, fed: Boolean): Pet
     
-    login(email: String!, password: string!): Auth
+    login(email: String!, password: String!): Auth
     }
 `;
 module.exports = typeDefs;
