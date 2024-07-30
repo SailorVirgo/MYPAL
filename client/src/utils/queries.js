@@ -1,5 +1,21 @@
 import { gql } from '@apollo/client';
 
+<<<<<<< HEAD
+export const QUERY_USER = gql`
+  query user($username: String!) {
+    user(username: $username) {
+      _id
+      username
+      email
+      thoughts {
+        _id
+        thoughtText
+        createdAt
+      }
+    }
+  }
+`;
+=======
 export const GET_USER = gql`
   query GetUser {
     user {
@@ -106,3 +122,4 @@ export default {
   UPDATE_PET,
   LOGIN,
 };
+>>>>>>> e8ccd78df83c1d7a12369366a620aadfa4b7b1fa
