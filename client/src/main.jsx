@@ -1,27 +1,32 @@
-import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import App from './App.jsx';
-import Home from './pages/Home';
-import Login from './pages/Login';
+import App from "./App.jsx";
+import Home from "./pages/Home";
 import Signup from './pages/Signup';
-import AdoptPet from './pages/AdoptPet';
-import PetCare from './pages/PetCare';
-import PetStatus from './pages/PetStatus';
-import ErrorPage from './pages/ErrorPage';
+import Login from "./pages/login";
+
+
+import ErrorPage from "./pages/error";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <Login />},    
-      { path: '/home', element: <Home /> },
-      { path: '/signup', element: <Signup /> },
-      { path: '/adoptpet', element: <AdoptPet /> },
-      { path: '/petcare', element: <PetCare /> },
-      { path: '/petstatus', element: <PetStatus /> },
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: '/signup',
+        element: <Signup />
+      },
     ],
   },
 ]);
