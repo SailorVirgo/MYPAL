@@ -1,100 +1,95 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import Auth from "../utils/auth";
+import { CREATE_USER } from "../utils/mutations";
 
-import { useMutation } from '@apollo/client';
-import { ADD_USER } from '../utils/mutations';
+function SignUp() {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-import Auth from '../utils/auth';
-
-const Signup = () => {
-  const [formState, setFormState] = useState({
-    username: '',
-    email: '',
-    password: '',
+  const [createUser, { loading }] = useMutation(CREATE_USER, {
+    onCompleted: (data) => {
+      // Store the token in localStorage
+      console.log("Signup successful", data.createUser.user);
+      Auth.login(data.createUser.token);
+      // redirect the user or update the app state here
+    },
+    onError: (error) => {
+      setErrorMessage(error.message);
+    },
   });
-  const [addUser, { error, data }] = useMutation(ADD_USER);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormState({
-      ...formState,
-      [name]: value,
-    });
-  };
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    console.log(formState);
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!username ||!email ||!password ||!confirmPassword) {
+      setErrorMessage("Please fill out all fields");
+      return;
+    }
+    if (password!== confirmPassword) {
+      setErrorMessage("Passwords do not match");
+      return;
+    }
     try {
-      const { data } = await addUser({
-        variables: { ...formState },
-      });
-
-      Auth.login(data.addUser.token);
+      await createUser({ variables: { username, email, password } });
     } catch (e) {
-      console.error(e);
+      console.error("Signup error", e);
     }
   };
 
+  if (loading) return <p>Loading...</p>;
+
   return (
-    <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Sign Up</h4>
-          <div className="card-body">
-            {data ? (
-              <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
-              </p>
-            ) : (
-              <form onSubmit={handleFormSubmit}>
-                <input
-                  className="form-input"
-                  placeholder="Your username"
-                  name="username"
-                  type="text"
-                  value={formState.name}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="Your email"
-                  name="email"
-                  type="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="******"
-                  name="password"
-                  type="password"
-                  value={formState.password}
-                  onChange={handleChange}
-                />
-                <button
-                  className="btn btn-block btn-primary"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </form>
-            )}
-
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
-            )}
-          </div>
+    <div className="signup-container">
+      <h2>Sign Up</h2>
+      {errorMessage && <p className="error">{errorMessage}</p>}
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
         </div>
-      </div>
-    </main>
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="confirmPassword">Confirm Password:</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
   );
-};
+}
 
-export default Signup;
+export default SignUp;
