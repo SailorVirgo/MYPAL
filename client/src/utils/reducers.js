@@ -1,7 +1,15 @@
-import { HANDLE_AGE, HANDLE_PLAY, CLEAN_PET, HANDLE_FEED, ADD_TO_USER } from "./actions";
+import { CREATE_PET, HANDLE_AGE, HANDLE_PLAY, CLEAN_PET, HANDLE_FEED, ADD_TO_USER } from "./actions";
 
 export const reducer = (state, action) => {
     switch (action.type) {
+        case CREATE_PET:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    pet: [...state.user.pets, action.pet]
+                }
+            }
         case HANDLE_AGE:
             return {
                 ...state,
@@ -41,7 +49,10 @@ export const reducer = (state, action) => {
         case ADD_TO_USER:
             return {
                 ...state,
-                userPets: [...action.userPets],
+                user: {
+                    ...state.user,
+                    pets: [...state.user.pets, action.pet],
+                }
             };
         default:
             return state;

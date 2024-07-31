@@ -1,3 +1,4 @@
+export const CREATE_PET = "CREATE_PET"
 export const HANDLE_FEED = "HANDLE_FEED";
 export const HANDLE_PLAY = "HANDLE_PLAY";
 export const HANDLE_AGE = "HANDLE_AGE";

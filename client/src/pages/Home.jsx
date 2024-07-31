@@ -2,10 +2,10 @@ import { useQuery } from '@apollo/client';
 
 
 
-import { QUERY_USER } from '../utils/queries';
+import { GET_USER } from '../utils/queries';
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_USER);
+  const { loading, data } = useQuery(GET_USER);
   const user = data?.user || [];
 
   return (
