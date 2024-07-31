@@ -2,12 +2,44 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import Auth from "../utils/auth";
 import { LOGIN_USER } from "../utils/mutations";
-<<<<<<< HEAD
 import { Button, Form, Grid, Header, Icon, Message, Segment } from 'semantic-ui-react'
-=======
->>>>>>> e8ccd78df83c1d7a12369366a620aadfa4b7b1fa
 
-function Login() {
+const Login = (props) => {
+  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [login, { error, data }] = useMutation(LOGIN_USER);
+
+  // update state based on form input changes
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
+
+  // submit form
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(formState);
+    try {
+      const { data } = await login({
+        variables: { ...formState },
+      });
+
+      Auth.login(data.login.token);
+    } catch (e) {
+      console.error(e);
+    }
+
+    // clear form values
+    setFormState({
+      email: '',
+      password: '',
+    });
+  };
+
+/*function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -24,7 +56,7 @@ function Login() {
     },
   });
 
-  const handleSubmit = async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       setErrorMessage("Please enter both email and password");
@@ -37,20 +69,19 @@ function Login() {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>;*/
 
   return (
-<<<<<<< HEAD
     <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
     <Grid.Column style={{ maxWidth: 450 }}>
       <Header as='h2' color='teal' textAlign='center'>
       <Icon name='heartbeat' /> Log-in to care for your Animals!
       </Header>
-      <Form size='large'>
+      <Form onSubmit={handleFormSubmit} size='large'>
         <Segment stacked>
-          <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' type="email" value={email} onChange={(e) => setEmail(e.target.value)} required/>
-          <Form.Input fluid icon='lock' iconPosition='left' placeholder='Password' type='password' id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-          <Button color='teal' fluid size='large'> Login </Button>
+          <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' name="email" type="email" value={formState.email} onChange={handleChange}/>
+          <Form.Input fluid icon='lock' iconPosition='left' placeholder='Password' name="password" type='password' id="password" value={formState.password} onChange={handleChange} />
+          <Button style={{ cursor: 'pointer' }} type="submit" color='teal' fluid size='large'> Login </Button>
         </Segment>
       </Form>
       <Message>
@@ -58,35 +89,6 @@ function Login() {
       </Message>
     </Grid.Column>
   </Grid>
-=======
-    <div className="login-container">
-      <h2>Login</h2>
-      {errorMessage && <p className="error">{errorMessage}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
->>>>>>> e8ccd78df83c1d7a12369366a620aadfa4b7b1fa
   );
 }
 

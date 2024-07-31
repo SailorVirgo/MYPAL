@@ -1,11 +1,10 @@
-const mongoose = require('mongoose');
-
-const { Schema } = mongoose;
+const { Schema, model } = require('mongoose');
+//const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const Pets = require('./Pet');
+// const Pets = require('./Pet');
 
 const userSchema = new Schema({
-userName: {
+username: {
     type: String,
     required: true,
     unique: true,
@@ -22,7 +21,14 @@ password: {
     required: true,
     minlength: 5
 },
-pets: [Pets.schema]
+pets:  [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Pet',
+    },
+  ],
+
+//[Pets.schema]
 });
 
 userSchema.pre('save', async function(next) {
@@ -34,11 +40,11 @@ userSchema.pre('save', async function(next) {
     next();
 });
   
-  // compare the incoming password with the hashed password
+  
 userSchema.methods.isCorrectPassword = async function(password) {
     return await bcrypt.compare(password, this.password);
 };
   
-const User = mongoose.model('User', userSchema);
+const User = model('User', userSchema);
   
 module.exports = User;

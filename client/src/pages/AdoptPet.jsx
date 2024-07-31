@@ -1,4 +1,10 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+
+
+
+
 
 const AdoptPet = () => {
   const [petName, setPetName] = useState('');
