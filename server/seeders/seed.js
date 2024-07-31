@@ -1,12 +1,49 @@
-const db = require ('../config/connection');
-const { User, Pet } = require ('../models');
-const cleanDB = require ('../config/cleanDB');
+const db = require('../config/connection');
+const { User, Pet } = require('../models');
+const petSeeds = require('./petSeeds.json');
+const userSeeds = require('./userSeeds.json');
+const cleanDB = require('./cleanDB');
+
+const transformPetData = (data) => {
+  return data.map(item => ({
+    ...item,
+    age: Number(item.age),
+    isClean: item.isClean === "2",
+    playedWith: item.playedWith === "1",
+    hunger: Number(item.hunger)
+  }));
+};
 
 db.once('open', async () => {
-    await cleanDB ('User','users');
-    await cleanDB ('Pet','pets');
+  try {
+    await cleanDB('User', 'users');
+    await cleanDB('Pet', 'pets');
+    
+    await User.create(userSeeds);
 
-    const pets = await Pet.insertMany([
+    const transformedPetSeeds = transformPetData(petSeeds);
+
+    for (let i = 0; i < transformedPetSeeds.length; i++) {
+      const { _id, petOwner } = await Pet.create(transformedPetSeeds[i]);
+      const user = await User.findOneAndUpdate(
+        { username: petOwner },
+        {
+          $addToSet: {
+            pets: _id,
+          },
+        }
+      );
+    }
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
+
+  console.log('all done!');
+  process.exit(0);
+});
+
+   /* const pets = await Pet.insertMany([
     {
         name: 'Leia',
         type: 'Dog',
@@ -55,5 +92,5 @@ await User.create({
 console.info('users seeded');
 
 process.exit();
-});
+}); */
 

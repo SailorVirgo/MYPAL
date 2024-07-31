@@ -27,6 +27,7 @@ const resolvers = {
     },
     Mutation: {
         addUser: async (parent, args) => {
+           
             const user = await User.create(args);
             const token = signToken(user);
     
@@ -39,7 +40,7 @@ const resolvers = {
       
             throw AuthenticationError;
           },
-        createPet: async (parent, {  name, type, age, isClean = true, playedWith, hunger = 0  }) => {
+        addPet: async (parent, {  name, type, age, isClean = true, playedWith, hunger = 0  }) => {
             if (!context.user) {
                 throw new Error('User not authenticated');
             }

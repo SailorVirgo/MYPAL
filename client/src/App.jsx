@@ -1,4 +1,5 @@
 import "./App.css";
+import 'semantic-ui-css/semantic.min.css'
 import {
   ApolloClient,
   InMemoryCache,
@@ -8,8 +9,8 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { Outlet } from "react-router-dom";
 
-//import Header from './components/Header';
-//import Footer from './components/Footer';
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -39,11 +40,11 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <div className="">
-        {/* <Header /> */}
+        <Header /> 
         <div className="">
           <Outlet />
         </div>
-        {/* <Footer /> */}
+        <Footer /> 
       </div>
     </ApolloProvider>
   );
