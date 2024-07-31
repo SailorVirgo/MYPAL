@@ -1,4 +1,5 @@
 import "./App.css";
+import 'semantic-ui-css/semantic.min.css'
 import {
   ApolloClient,
   InMemoryCache,
@@ -8,8 +9,8 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { Outlet } from "react-router-dom";
 
-//import Header from './components/Header';
-//import Footer from './components/Footer';
+import Header from './components/Header'
+import Footer from './components/Footer'
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -19,12 +20,12 @@ const httpLink = createHttpLink({
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = localStorage.getItem("id_token");
+  const token = localStorage.getItem('id_token');
   // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      authorization: token ? `Bearer ${token}` : '',
     },
   };
 });
@@ -39,11 +40,11 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <div className="">
-        {/* <Header /> */}
+        <Header /> 
         <div className="">
           <Outlet />
         </div>
-        {/* <Footer /> */}
+        <Footer /> 
       </div>
     </ApolloProvider>
   );

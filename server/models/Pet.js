@@ -1,9 +1,8 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const { Schema } = mongoose;
 
 const petSchema = new Schema ({
-    name: {
+    petName: {
         type: String,
         required: true,
         trim: true
@@ -21,20 +20,25 @@ const petSchema = new Schema ({
     },
     isClean: {
         type: Boolean,
-        default: '1'
+        required: true
     },
     playedWith: {
         type: Boolean,
-        default: '0'
+        required: true
     },
     hunger:{
         type: Number,
         min: 0,
         max: 100,
         default: 0
-    }
+    },
+    petOwner: {
+        type: String,
+        required: true,
+        trim: true,
+      },
 });
 
-const Pet = mongoose.model('Pet', petSchema);
+const Pet = model('Pet', petSchema);
 
 module.exports = Pet;
