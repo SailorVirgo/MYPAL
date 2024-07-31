@@ -1,0 +1,124 @@
+/* Home screen*/
+.home-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.home-header {
+    margin-bottom: 20px;
+}
+
+.home-nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.home-nav li {
+    display: inline;
+    margin: 0 10px;
+}
+
+.featured-pet {
+    margin: 20px 0;
+}
+
+.pet-details {
+    display: flex;
+    align-items: center;
+}
+
+.pet-details img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.recent-activities ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.recent-activities li {
+    margin: 5px 0;
+}
+
+.home-footer {
+    margin-top: 20px;
+}
+
+.user-profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-profile button {
+    margin-left: 10px;
+    padding: 5px 10px;
+}
+
+/* Achievements styling */
+
+.achievements-container {
+    padding: 20px;
+}
+
+.achievements-container ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.achievements-container li {
+    margin: 20px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Adoption styling */
+
+.adopt-pet-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.adopt-pet-container form {
+    display: inline-block;
+    text-align: left;
+}
+
+.adopt-pet-container label {
+    display: block;
+    margin: 10px 0;
+}
+
+
+/* Pet Care */
+
+.pet-care-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.actions button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+
+}
+
+/* Pet Status */
+
+.pet-status-container {
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .status-details {
+    text-align: left;
+    display: inline-block;
+  }
+  
+  .status-details p {
+    margin: 10px 0;
+  }
+  

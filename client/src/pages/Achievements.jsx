@@ -1,18 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
+import './Achievements.css';
 
 const Achievements = () => {
-  const [achievements, setAchievements] = useState([]);
+  const achievements = [
+    { id: 1, title: 'First Adoption', description: 'Adopt your first pet.' },
+    { id: 2, title: 'Healthy Pet', description: 'Keep your pet healthy for 30 days.' },
+    // we can add more achievements here
+  ];
 
   return (
-    <div>
-      <h2>Achievements</h2>
+    <div className="achievements-container">
+      <h1>Achievements</h1>
       <ul>
-        {achievements.map((achievement, index) => (
-          <li key={index}>{achievement}</li>
+        {achievements.map(achievement => (
+          <li key={achievement.id}>
+            <h2>{achievement.title}</h2>
+            <p>{achievement.description}</p>
+          </li>
         ))}
       </ul>
     </div>
   );
 };
 
-export default Achievements;
+
+module.export = Achievements;
