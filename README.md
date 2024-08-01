@@ -38,10 +38,9 @@ Welcome to the Virtual Pet Website, an innovative platform where users can exper
 - adopt a pet
 - care and maintain your pet
 
-## Preview
-
 
 ## Link to Deployed Application
+https://mypal-10sd.onrender.com/
 
 
 ## Contributors
