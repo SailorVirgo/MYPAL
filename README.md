@@ -1,7 +1,18 @@
 # The-Quiet-Ones-
 Project 3
 
+## Table of Contents
+- [Description](#description)
+- [Features](#features)
+- [Technologies Used](#technologiesused)
+- [Usage](#usage)
+- [Preview](#preview)
+- [Deployed Application](#deployedapplication)
+- [Contributors](#contributors)
+
+
 ## Description
+Welcome to the Virtual Pet Website, an innovative platform where users can experience the joys of pet ownership in a virtual environment. This website allows users to  can adopt, play with, feed, and care for a virtual cat or dog. The platform offers interactive features that simulate real pet care, including feeding, playtime activities, and health check-ups. Users can earn rewards for consistent care and unlock new accessories and toys for their pets.
 
 ## Features
 
@@ -22,9 +33,11 @@ Project 3
 - Authentication: JSON Web Tokens (JWT)
 - Deployment: Render
 
-## Installation
 
 ## Usage
+- Sign up or create an account
+- adopt a pet
+- care and maintain your pet
 
 ## Preview
 
