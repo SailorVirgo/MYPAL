@@ -20,6 +20,8 @@ const startApolloServer = async () => {
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 
+  // Serve up static assets
+  app.use("/images", express.static(path.join(__dirname, "../client/images")));
 
   app.use(
     "/graphql",
@@ -37,10 +39,15 @@ const startApolloServer = async () => {
   }
 
   db.once("open", () => {
+    console.log('MongoDB connected successfully.');
+
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
       console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
     });
+  });
+  db.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
   });
 };
 startApolloServer();
