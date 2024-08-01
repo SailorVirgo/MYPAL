@@ -1,5 +1,4 @@
-# The-Quiet-Ones-
-Project 3
+# MYPAL
 
 ## Table of Contents
 - [Description](#description)
