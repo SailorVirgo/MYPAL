@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -10,18 +11,28 @@ import {
 } from "semantic-ui-react";
 import Auth from "../../utils/auth";
 
+
 const mainHeader = () => {
+  const navigate = useNavigate();
+
   const logout = (event) => {
     event.preventDefault();
     Auth.logout();
+  };
+
+  const goToAdoptPet = (event) => {
+    event.preventDefault();
+    navigate('/AdoptPet'); // Ensure the correct route for the AdoptPet component
   };
   return (
     <div>
       {Auth.loggedIn() ? (
         <Menu color="teal" fixed="top" inverted>
           <Container>
-            <Menu.Item as="a" header>
-              <Icon name="heartbeat" />
+
+            <Menu.Item as='a' header>
+              <Icon name='paw' />
+
               Pet Adoption Application
             </Menu.Item>
             <Menu.Item as="a">Home</Menu.Item>
@@ -39,23 +50,25 @@ const mainHeader = () => {
                 <Dropdown.Item>
                   <Link to="/achievements">Achievements</Link>
                 </Dropdown.Item>
+
                 <Dropdown.Item onClick={logout}>Log Out</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Container>
         </Menu>
       ) : (
-        <Menu color="teal" fixed="top" inverted>
-          <Container>
-            <Menu.Item as="a" header>
-              <Icon name="heartbeat" />
-              Pet Adoption Application
-            </Menu.Item>
-            {/* <button onClick={() => setIsLoggedIn(!isLoggedIn)}>
-        {isLoggedIn ? 'Log Out' : 'Log In'}
-      </button>*/}
-          </Container>
-        </Menu>
+
+        <Menu color='teal' fixed='top' inverted>
+       <Container>
+       <Menu.Item as='a' header>
+       <Icon name='paw'/>
+        Pet Adoption Application
+       </Menu.Item>           
+       </Container>
+       </Menu>
+       
+       
+
       )}
     </div>
   );
